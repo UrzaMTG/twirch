@@ -1,7 +1,13 @@
 {
-  "name": "node-starter",
-  "version": "0.0.0",
+  "name": "twirch",
+  "version": "0.0.1",
+  "description": "App for viewing multiple Twitch chats in a single feed",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1",
+    "tmi.js": "^1.8.5"
   }
 }
