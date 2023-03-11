@@ -2,27 +2,21 @@
 <html>
   <head>
     <title>Twirch</title>
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-
-      var form = document.getElementById('form');
-      var input = document.getElementById('input');
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (input.value) {
-          socket.emit('chat message', input.value);
-          input.value = '';
-        }
-      });
-    </script>
+    <div id="navBar">
+      <span><img class="icon" src="images/plus-minus.svg" role="img" alt></span>
+      <span class="flexSpacer">twirch</span>
+      <span><img class="icon" src="images/gear.svg" role="img" alt><img class="icon" src="images/question.svg" role="img" alt></span>
+    </div>
+    <div id="main">
+      <ul id="messages"></ul>
+      <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Send</button>
+      </form>
+    </div>
+    <script src="/socket.io/socket.io.js" />
+    <script src="client.js" />
   </body>
 </html>
