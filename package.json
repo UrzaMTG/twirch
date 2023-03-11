@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "App for viewing multiple Twitch chats in a single feed",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

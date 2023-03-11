@@ -42,6 +42,6 @@ client.on('message', (channel, tags, message, self) => {
   });
 });*/
 
-server.listen(3000, () => {
+server.listen(process.env.PORT || 3000, () => {
   console.log('listening on *:3000');
 });
