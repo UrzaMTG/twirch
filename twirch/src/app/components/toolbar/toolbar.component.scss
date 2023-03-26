@@ -1,0 +1,29 @@
+#navBar {
+  background:rgba(0, 0, 0, 0.85);
+  color: rgba(224, 224, 224, 1);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  line-height: 32px;
+  padding: 0px 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 1;
+}
+
+.flexSpacer {
+  flex-grow: 99;
+  text-align: center;
+}
+
+.icon {
+  position: relative;
+  color: inherit;
+  top: 0px;
+  width: 24px;
+  height: 24px;
+}
