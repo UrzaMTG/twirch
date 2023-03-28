@@ -1,11 +1,39 @@
+#main {
+  scroll-behavior: auto;
+  overflow-y: auto;
+}
+
 #messages {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 #messages > li {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
 }
 #messages > li:nth-child(odd) {
-  background: #efefef;
+  background: rgb(41, 41, 41);
+}
+
+.messageContainer {
+  word-wrap: break-word;
+}
+
+.messageChannel {
+  color: rgb(150, 150, 150);
+  padding-right: 4px;
+}
+
+.messageTimestamp {
+  color: rgb(105, 105, 105);
+  padding-right: 4px;
+}
+
+.messageUsername {
+  color: rgb(224, 224, 224);
+  padding-right: 4px;
+}
+
+.messageText {
+  color:rgb(224, 224, 224)
 }

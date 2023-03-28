@@ -4,7 +4,7 @@ export class Message {
   timestamp: Date | null;
   text: string;
 
-  constructor(channel: string, username: string, text: string, timestamp: Date | null) {
+  constructor(channel: string, username: string, text: string, timestamp: Date | null = null) {
     this.channel = channel;
     this.username = username;
     this.timestamp = timestamp;

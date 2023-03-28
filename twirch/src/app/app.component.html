@@ -1,5 +1,12 @@
 <app-toolbar></app-toolbar>
 
 <div id="main">
-  <ul id="messages"></ul>
+  <ul id="messages">
+    <li *ngFor="let message of messages" class="messageContainer">
+      <span class="messageChannel">({{message.channel}})</span>
+      <span class="messageTimestamp" [hidden]="!message.timestamp">{{message.timestamp}}</span>
+      <span class="messageUsername">{{message.username}}:</span>
+      <span class="messageText">{{message.text}}</span>
+    </li>
+  </ul>
 </div>
