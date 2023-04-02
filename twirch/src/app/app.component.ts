@@ -19,39 +19,58 @@ export class AppComponent {
       this.segments = segments;
     });
 
-    //this.addTestMessages();
+    this.test_addTestMessages();
   }
 
-  /*addTestMessages(): void {
-    this.messages.push(new Message("Randomrings", "UrzaMTG", "Test message 1"))
-    this.messages.push(new Message("ThatBardVal", "UrzaMTG", "Test message 2 is really quite long and I expect this to break something eventually maybe what could possibly go wrong"))
-    this.messages.push(new Message("Mystakin", "UrzaMTG", "Test message 3"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("weffjebster", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("eryngobragh", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("Mystakin", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("eryngobragh", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("eryngobragh", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("eryngobragh", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("weffjebster", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("Randomrings", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("eryngobragh", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("Mystakin", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("Randomrings", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("eryngobragh", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("weffjebster", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("Randomrings", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("UrzaMTG", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("Mystakin", "UrzaMTG", "Test message 4"))
-    this.messages.push(new Message("eryngobragh", "UrzaMTG", "Test message 4"))
-  }*/
+  test_addTestMessages(): void {
+    for (let i = 0; i < 100; i++) {
+      let username = this.test_selectRandomUser();
+      this.messages.push({channel: this.test_selectRandomChannel(), username: this.test_selectRandomUser(), "display-name": this.test_selectRandomUser(), message: this.test_selectRandomMessage()});
+    }
+  }
+
+  test_selectRandomChannel(): string {
+    let channels: string[] = [
+      "UrzaMTG",
+      "ThatBardVal",
+      "weffjebster",
+      "TheSatellite54",
+      "wafflesoup",
+      "Randomrings",
+      "Duckie2010",
+      "eryngobragh",
+      "Mystakin"
+    ];
+    
+    return channels[Math.floor(Math.random() * channels.length)];
+  }
+
+  test_selectRandomUser(): string {
+    let users: string[] = [
+      "UrzaMTG",
+      "ThatBardVal",
+      "weffjebster",
+      "TheSatellite54",
+      "wafflesoup",
+      "Randomrings",
+      "Duckie2010",
+      "eryngobragh",
+      "Mystakin"
+    ];
+    
+    return users[Math.floor(Math.random() * users.length)];
+  }
+
+  test_selectRandomMessage(): string {
+    let messages: string[] = [
+      "PogChamp",
+      "You would not believe your eyes tsEorb tsEorb if ten million 💯fireflies 🐝lit 🔥up ☝️the world :milky_way: as I fell asleep :sleeping: cause they'd fill the open air :cloud: and leave teardrops :sweat_drops: everywhere you'd think :thought_balloon: me rude but I would just stand 🕴and stare tsEorb I like to make myself believe :thought_balloon: that planet earth :earth_asia: turns slowly 🚶it's hard to say 🗣 that I'd rather stay awake 👁 when I'm asleep :sleeping: cause everything tsEorb :lips: tsEorb is never as it seems",
+      "!",
+      "Can you believe that just happened",
+      "wtf man"
+    ];
+
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+    
 }
