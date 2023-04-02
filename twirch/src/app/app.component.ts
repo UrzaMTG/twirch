@@ -25,7 +25,7 @@ export class AppComponent {
   test_addTestMessages(): void {
     for (let i = 0; i < 100; i++) {
       let username = this.test_selectRandomUser();
-      this.messages.push({channel: this.test_selectRandomChannel(), username: this.test_selectRandomUser(), "display-name": this.test_selectRandomUser(), message: this.test_selectRandomMessage()});
+      this.messages.push({channel: this.test_selectRandomChannel(), username: this.test_selectRandomUser().toLowerCase(), "display-name": this.test_selectRandomUser(), message: this.test_selectRandomMessage()});
     }
   }
 
@@ -47,15 +47,12 @@ export class AppComponent {
 
   test_selectRandomUser(): string {
     let users: string[] = [
-      "UrzaMTG",
-      "ThatBardVal",
-      "weffjebster",
-      "TheSatellite54",
-      "wafflesoup",
-      "Randomrings",
-      "Duckie2010",
-      "eryngobragh",
-      "Mystakin"
+      "Tagmer",
+      "Chubblekins",
+      "HardCover",
+      "VirtueCatVT",
+      "shorthouse",
+      "G0lbez"
     ];
     
     return users[Math.floor(Math.random() * users.length)];
