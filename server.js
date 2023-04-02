@@ -37,7 +37,7 @@ twitchClient.connect().catch((error) => {
 
 io.on('connection', (socket) => {
   socket.on('join channels', (channels) => {
-    console.log(`socket ${socket.id} joining channels: ` + channels.toString());
+    console.debug(`socket ${socket.id} joining channels: ` + channels.toString());
     channels.toString().split(',').forEach(element => {
       socket.join(`#${element}`);
     });
@@ -45,12 +45,12 @@ io.on('connection', (socket) => {
 });
 
 io.of("/").adapter.on("create-room", (room) => {
-  console.log(`Room ${room} was created`);
+  console.debug(`Room ${room} was created`);
   twitchClient.join(room).catch((error) => { console.error(error); });
 });
 
 io.of("/").adapter.on("delete-room", (room) => {
-  console.log(`Room ${room} was deleted`);
+  console.debug(`Room ${room} was deleted`);
 });
 
 app.use(express.static(process.cwd()+"/app/dist/twirch/"));
