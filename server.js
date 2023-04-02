@@ -21,26 +21,35 @@ const twitchClient = new tmi.Client({
   },
 });
 
-twitchClient.connect().catch((error) => {
-  console.error(error);
-});
-
-app.use(express.static(process.cwd()+"/app/dist/twirch/"));
-app.get('/', (req, res) => {
-  res.sendFile(process.cwd()+"/app/dist/twirch/index.html");
-});
-
 twitchClient.on('message', (channel, tags, message, self) => {
   // Ignore echoed messages.
   if (self) return;
 
   // Echo message to clients that care about this channel
+  io.to(channel).emit("chat message", tags, message)
+});
+
+twitchClient.connect().catch((error) => {
+  console.error(error);
 });
 
 io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
+  socket.on('join channels', (channels) => {
+    console.log(`socket ${socket.id} joined channels: ` + channels);
   });
+});
+
+io.of("/").adapter.on("create-room", (room) => {
+  console.log(`Room ${room} was created`);
+});
+
+io.of("/").adapter.on("delete-room", (room) => {
+  console.log(`Room ${room} was deleted`);
+  });
+
+app.use(express.static(process.cwd()+"/app/dist/twirch/"));
+app.get('/', (req, res) => {
+  res.sendFile(process.cwd()+"/app/dist/twirch/index.html");
 });
 
 server.listen(port, () => {
