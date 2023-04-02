@@ -6,7 +6,11 @@ const app = express(),
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: `http://localhost:${port}`,
+  },
+});
 
 const tmi = require('tmi.js');
 
@@ -45,7 +49,7 @@ io.of("/").adapter.on("create-room", (room) => {
 
 io.of("/").adapter.on("delete-room", (room) => {
   console.log(`Room ${room} was deleted`);
-  });
+});
 
 app.use(express.static(process.cwd()+"/app/dist/twirch/"));
 app.get('/', (req, res) => {
