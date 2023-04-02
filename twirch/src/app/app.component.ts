@@ -1,31 +1,41 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { Message } from './models/message';
+import { ChannelService } from './services/channel-service.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  segments: UrlSegment[] = [];
+export class AppComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   title = 'twirch';
-  
-  constructor(private route: ActivatedRoute) {
-    route.url.subscribe((segments: UrlSegment[]) => {
-      // do whatever you need to with the segments
-      this.segments = segments;
-    });
 
-    this.test_addTestMessages();
+  private _msgSub?: Subscription;
+  
+  constructor(private location: Location, private channelService: ChannelService) {
+    console.log(location.path().split('/').splice(1));
+
+    channelService.selectChannels(location.path().split('/').splice(1));
+
+    //this.test_addTestMessages();
+  }
+
+  ngOnInit(): void {
+    this._msgSub = this.channelService.chatMessage.subscribe(msg => { console.log(msg); this.messages.push(msg); })
+  }
+  
+  ngOnDestroy(): void {
+    this._msgSub?.unsubscribe();
   }
 
   test_addTestMessages(): void {
     for (let i = 0; i < 100; i++) {
       let username = this.test_selectRandomUser();
-      this.messages.push({channel: this.test_selectRandomChannel(), username: this.test_selectRandomUser().toLowerCase(), "display-name": this.test_selectRandomUser(), message: this.test_selectRandomMessage()});
+      this.messages.push({channel: this.test_selectRandomChannel(), username: username.toLowerCase(), "display-name": username, message: this.test_selectRandomMessage()});
     }
   }
 

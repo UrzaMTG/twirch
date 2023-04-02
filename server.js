@@ -1,5 +1,3 @@
-// run `node index.js` in the terminal
-
 const express = require('express');
 const app = express(),
       port = process.env.PORT || 3080;
@@ -17,7 +15,7 @@ const tmi = require('tmi.js');
 const twitchClient = new tmi.Client({
   options: {
     skipMembership: true,
-    debug: true,
+    debug: false,
   },
   connection: {
     reconnect: true,
@@ -30,7 +28,7 @@ twitchClient.on('message', (channel, tags, message, self) => {
   if (self) return;
 
   // Echo message to clients that care about this channel
-  io.to(channel).emit("chat message", tags, message)
+  io.to(channel).emit('chat message', {...tags, 'channel': channel, 'message': message})
 });
 
 twitchClient.connect().catch((error) => {
@@ -39,12 +37,16 @@ twitchClient.connect().catch((error) => {
 
 io.on('connection', (socket) => {
   socket.on('join channels', (channels) => {
-    console.log(`socket ${socket.id} joined channels: ` + channels);
+    console.log(`socket ${socket.id} joining channels: ` + channels.toString());
+    channels.toString().split(',').forEach(element => {
+      socket.join(`#${element}`);
+    });
   });
 });
 
 io.of("/").adapter.on("create-room", (room) => {
   console.log(`Room ${room} was created`);
+  twitchClient.join(room).catch((error) => { console.error(error); });
 });
 
 io.of("/").adapter.on("delete-room", (room) => {
@@ -52,7 +54,7 @@ io.of("/").adapter.on("delete-room", (room) => {
 });
 
 app.use(express.static(process.cwd()+"/app/dist/twirch/"));
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(process.cwd()+"/app/dist/twirch/index.html");
 });
 
