@@ -1,13 +1,21 @@
-export class Message {
-  channel: string;
-  username: string;
-  timestamp: Date | null;
-  text: string;
+import { Badges } from "tmi.js";
 
-  constructor(channel: string, username: string, text: string, timestamp: Date | null = null) {
-    this.channel = channel;
-    this.username = username;
-    this.timestamp = timestamp;
-    this.text = text;
-  }
+export class Message {
+  username!: string;
+  message!: string;
+
+  badges?: Badges;
+  color?: string;
+  "display-name"?: string;
+  emotes?: { [emoteid: string]: string[] };
+  mod?: boolean;
+  "room-id"?: string;
+  subscriber?: boolean;
+  turbo?: boolean;
+  "user-id"?: string;
+  "user-type"?: "" | "mod" | "global_mod" | "admin" | "staff";
+  "emotes-raw"?: string;
+  "badges-raw"?: string;
+  "message-type"?: string;
+  channel?: string;
 }
