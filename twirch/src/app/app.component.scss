@@ -23,6 +23,8 @@ $timestamp-color: rgb(105, 105, 105);
 
 .messageContainer {
   word-wrap: break-word;
+  line-height: 20px;
+  vertical-align: middle;
 }
 
 .messageChannel {
@@ -42,4 +44,10 @@ $timestamp-color: rgb(105, 105, 105);
 
 .messageText {
   color: $text-color;
+}
+
+img.twitch-emote {
+  margin: -0.5rem 0;
+  position: relative;
+  vertical-align: initial;
 }

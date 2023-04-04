@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { EmoteOptions, parse } from 'simple-tmi-emotes'
 
 import { Message } from './models/message';
 import { ChannelService } from './services/channel-service.service';
@@ -8,7 +9,8 @@ import { ChannelService } from './services/channel-service.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
@@ -32,12 +34,16 @@ export class AppComponent implements OnInit, OnDestroy {
     // Add timestamp
     msg.timestamp = new Date(Date.now());
 
-    // Replace emotes
-    // https://static-cdn.jtvnw.net/emoticons/v1/[emote_id]/1.0
+    // Insert emotes
+    if (msg.emotes) {
+      let options: EmoteOptions = {
+        format: 'default',
+        themeMode: 'dark',
+        scale: '1.0'
+      }
 
-
-    // Strip/escape HTML
-
+      msg.message = parse(msg.message, msg.emotes, options);
+    }
 
     // Push to bound array
     this.messages.push(msg);

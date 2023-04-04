@@ -6,7 +6,7 @@
       <span class="messageChannel">({{message.channel}})</span>
       <span class="messageTimestamp" [hidden]="!message.timestamp">{{message.timestamp | date:'h:mm'}}</span>
       <span class="messageUsername" [ngStyle]="{'color': message.color}">{{message['display-name']}}:</span>
-      <span class="messageText">{{message.message}}</span>
+      <span class="messageText" [innerHTML]="message.message"></span>
     </li>
   </ul>
 </div>
