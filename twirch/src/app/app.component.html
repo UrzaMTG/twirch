@@ -1,7 +1,7 @@
 <app-toolbar></app-toolbar>
 
 <div id="main">
-  <ul id="messages">
+  <ul id="messages" #scrollArea>
     <li *ngFor="let message of messages" class="messageContainer">
       <span class="messageChannel">({{message.channel}})</span>
       <span class="messageTimestamp" [hidden]="!message.timestamp">{{message.timestamp | date:'h:mm'}}</span>
