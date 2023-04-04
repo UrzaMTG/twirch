@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express(),
-      port = process.env.PORT || 3080;
+      port = process.env.PORT || 3080,
+      clientPort = 4200;
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
   cors: {
-    origin: `http://localhost:${port}`,
+    origin: `http://localhost:${clientPort}`,
   },
 });
 

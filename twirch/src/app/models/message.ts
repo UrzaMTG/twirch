@@ -3,6 +3,9 @@ import { Badges } from "tmi.js";
 export class Message {
   username!: string;
   message!: string;
+  
+  channel?: string;
+  timestamp?: Date;
 
   badges?: Badges;
   color?: string;
@@ -17,5 +20,4 @@ export class Message {
   "emotes-raw"?: string;
   "badges-raw"?: string;
   "message-type"?: string;
-  channel?: string;
 }
