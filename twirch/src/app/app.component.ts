@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { EmoteOptions, parse } from 'simple-tmi-emotes'
 
 import { Message } from './models/message';
 import { ChannelService } from './services/channel-service.service';
@@ -8,9 +9,12 @@ import { ChannelService } from './services/channel-service.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
+  @ViewChild('scrollArea') private scrollArea!: ElementRef;
+
   messages: Message[] = [];
   title = 'twirch';
 
@@ -21,11 +25,42 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._msgSub = this.channelService.chatMessage.subscribe(msg => { this.messages.push(msg); })
+    this._msgSub = this.channelService.chatMessage.subscribe((msg) => this.processMessage(msg));
+  }
+
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
   }
   
   ngOnDestroy(): void {
     this._msgSub?.unsubscribe();
+  }
+
+  private processMessage(msg: Message): void {
+    // Add timestamp
+    msg.timestamp = new Date(Date.now());
+
+    msg.channel = msg.channel?.slice(1);
+
+    // Insert emotes
+    if (msg.emotes) {
+      let options: EmoteOptions = {
+        format: 'default',
+        themeMode: 'dark',
+        scale: '1.0'
+      }
+
+      msg.message = parse(msg.message, msg.emotes, options);
+    }
+
+    // Push to bound array
+    this.messages.push(msg);
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.scrollArea.nativeElement.scrollTop = this.scrollArea.nativeElement.scrollHeight;
+    } catch(err) { }                 
   }
     
 }

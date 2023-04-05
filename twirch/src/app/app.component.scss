@@ -4,13 +4,15 @@ $text-color: rgb(224, 224, 224);
 $channel-color: rgb(150, 150, 150);
 $timestamp-color: rgb(105, 105, 105);
 
-#main {
-  scroll-behavior: auto;
-  overflow-y: auto;
-}
-
 #messages {
   list-style-type: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  overflow-y: scroll;
   margin: 32px 0 0 0;
   padding: 0;
 }
@@ -23,6 +25,8 @@ $timestamp-color: rgb(105, 105, 105);
 
 .messageContainer {
   word-wrap: break-word;
+  line-height: 20px;
+  vertical-align: middle;
 }
 
 .messageChannel {
@@ -37,9 +41,16 @@ $timestamp-color: rgb(105, 105, 105);
 
 .messageUsername {
   color: $text-color;
+  font-weight: 600;
   padding-right: 4px;
 }
 
 .messageText {
   color: $text-color;
+}
+
+img.twitch-emote {
+  margin: -0.5rem 0;
+  position: relative;
+  vertical-align: initial;
 }
