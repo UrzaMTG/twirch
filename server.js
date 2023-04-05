@@ -51,6 +51,7 @@ io.of("/").adapter.on("create-room", (room) => {
 
 io.of("/").adapter.on("delete-room", (room) => {
   console.debug(`Room ${room} was deleted`);
+  twitchClient.part(room).catch((error) => { console.error(error); });
 });
 
 app.use(express.static(process.cwd()+"/twirch/dist/twirch/"));
