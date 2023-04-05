@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express(),
-      port = process.env.PORT || 3080,
-      clientPort = 4200;
+      port = process.env.PORT || 3080
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
@@ -45,19 +44,20 @@ io.on('connection', (socket) => {
   });
 });
 
-io.of("/").adapter.on("create-room", (room) => {
+io.of('/').adapter.on('create-room', (room) => {
   console.debug(`Room ${room} was created`);
   twitchClient.join(room).catch((error) => { console.error(error); });
 });
 
-io.of("/").adapter.on("delete-room", (room) => {
+io.of('/').adapter.on('delete-room', (room) => {
   console.debug(`Room ${room} was deleted`);
+  twitchClient.part(room).catch((error) => { console.error(error); });
 });
 
-app.use(express.static(process.cwd()+"/twirch/dist/twirch/"));
+app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
 
 app.get('/*', (req, res) => {
-  res.sendFile(process.cwd()+"/twirch/dist/twirch/index.html");
+  res.sendFile(process.cwd()+'/twirch/dist/twirch/index.html');
 });
 
 server.listen(port, () => {
