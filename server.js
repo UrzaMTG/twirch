@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
   cors: {
-    origin: `http://localhost:${clientPort}`,
+    origin: `http://localhost:${port}`,
   },
 });
 
@@ -54,9 +54,10 @@ io.of("/").adapter.on("delete-room", (room) => {
   console.debug(`Room ${room} was deleted`);
 });
 
-app.use(express.static(process.cwd()+"/app/dist/twirch/"));
+app.use(express.static(process.cwd()+"/twirch/dist/twirch/"));
+
 app.get('/*', (req, res) => {
-  res.sendFile(process.cwd()+"/app/dist/twirch/index.html");
+  res.sendFile(process.cwd()+"/twirch/dist/twirch/index.html");
 });
 
 server.listen(port, () => {
