@@ -40,6 +40,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
     // Add timestamp
     msg.timestamp = new Date(Date.now());
 
+    msg.channel = msg.channel?.slice(1);
+
     // Insert emotes
     if (msg.emotes) {
       let options: EmoteOptions = {
