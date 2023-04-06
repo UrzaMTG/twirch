@@ -2,11 +2,11 @@ const express = require('express');
 const app = express(),
       port = process.env.PORT || 3080;
 const http = require('http');
+const cors =  require('cors');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
-  transports: ['websocket'],
-  origin: false
+  origin: '*'
 });
 
 const tmi = require('tmi.js');
@@ -55,11 +55,7 @@ io.of('/').adapter.on('delete-room', (room) => {
 
 app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-
-  next();
-});
+app.use(cors());
 
 app.get('/*', (req, res) => {
   res.sendFile(process.cwd()+'/twirch/dist/twirch/index.html');
