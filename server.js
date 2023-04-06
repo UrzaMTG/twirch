@@ -6,10 +6,7 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
   transports: ['websocket'],
-  origin: [
-    'https://twirch-production.up.railway.app',
-    'http://localhost:3080'
-  ]
+  origin: '*'
 });
 
 const tmi = require('tmi.js');
