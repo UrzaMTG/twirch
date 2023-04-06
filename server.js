@@ -4,7 +4,13 @@ const app = express(),
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
-const io = new Server(server, {});
+const io = new Server(server, {
+  transports: ['websocket'],
+  origin: [
+    'http://localhost:3080',
+    'https://twirch-production.up.railway.app'
+  ]
+});
 
 const tmi = require('tmi.js');
 
@@ -48,20 +54,6 @@ io.of('/').adapter.on('create-room', (room) => {
 io.of('/').adapter.on('delete-room', (room) => {
   console.debug(`Room ${room} was deleted`);
   twitchClient.part(room).catch((error) => { console.error(error); });
-});
-
-app.use((req, res, next) => {
-  const corsWhitelist = [
-    'http://localhost:3080',
-    'https://twirch-production.up.railway.app'
-  ];
-  if (corsWhitelist.includes(req.headers.origin)) {
-    console.log(`Allowing ${req.headers.origin}`);
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  }
-
-  next();
 });
 
 app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
