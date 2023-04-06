@@ -52,12 +52,13 @@ io.of('/').adapter.on('delete-room', (room) => {
 
 app.use((req, res, next) => {
   const corsWhitelist = [
-      'http://localhost:3080',
-      'https://twirch-production.up.railway.app'
+    'http://localhost:3080',
+    'https://twirch-production.up.railway.app'
   ];
   if (corsWhitelist.includes(req.headers.origin)) {
-      res.header('Access-Control-Allow-Origin', req.headers.origin);
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    console.log(`Allowing ${req.headers.origin}`);
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   }
 
   next();
