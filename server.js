@@ -2,12 +2,22 @@ const express = require('express');
 const app = express(),
       port = process.env.PORT || 3080;
 const http = require('http');
-const server = http.createServer(app);
+const httpServer = http.createServer(app);
+
+app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
+
+app.get('/*', (req, res) => {
+  res.sendFile(process.cwd()+'/twirch/dist/twirch/index.html');
+});
+
 const { Server } = require('socket.io');
-const io = new Server(server, {
+const io = new Server(httpServer, {
   transports: ["websocket"],
   cors: {
-    origin: 'https://twirch-production.up.railway.app'
+    origin: [
+      'https://twirch-production.up.railway.app',
+      'http://localhost:3080'
+    ]
   }
 });
 
@@ -55,12 +65,6 @@ io.of('/').adapter.on('delete-room', (room) => {
   twitchClient.part(room).catch((error) => { console.error(error); });
 });
 
-app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
-
-app.get('/*', (req, res) => {
-  res.sendFile(process.cwd()+'/twirch/dist/twirch/index.html');
-});
-
-server.listen(port, () => {
+httpServer.listen(port, () => {
   console.log('listening on *:3080');
 });
