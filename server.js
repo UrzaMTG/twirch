@@ -4,9 +4,7 @@ const app = express(),
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
-const io = new Server(server, {
-  transports: ['websocket']
-});
+const io = new Server(server, {});
 
 const tmi = require('tmi.js');
 
@@ -57,7 +55,7 @@ app.use((req, res, next) => {
       'http://localhost:3080',
       'https://twirch-production.up.railway.app'
   ];
-  if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+  if (corsWhitelist.includes(req.headers.origin)) {
       res.header('Access-Control-Allow-Origin', req.headers.origin);
       res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   }
