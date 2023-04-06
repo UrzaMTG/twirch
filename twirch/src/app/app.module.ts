@@ -10,7 +10,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 const config: SocketIoConfig = {
   url: 'https://socket.io',
   options: {
-    transports: ['websocket', 'polling']
+    transports: ['polling', 'websocket']
   }
 };
 

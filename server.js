@@ -14,7 +14,7 @@ app.get('/*', (req, res) => {
 
 const { Server } = require('socket.io');
 const io = new Server(httpServer, {
-  transports: ['websocket', 'polling'],
+  transports: ['polling', 'websocket'],
   cors: {
     origin: [
       'https://twirch.io',
@@ -22,11 +22,6 @@ const io = new Server(httpServer, {
     ],
     preflightContinue: true
   }
-});
-
-io.on('connect_error', () => {
-  // revert to classic upgrade
-  socket.io.opts.transports = ['polling', 'websocket'];
 });
 
 io.on('connection', (socket) => {
