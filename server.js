@@ -6,10 +6,8 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
   cors: {
-    origin: [
-      'http://localhost:3080',
-      'https://twirch-production.up.railway.app'
-    ]
+    origin: 'https://twirch-production.up.railway.app',
+    preflightContinue: true
   }
 });
 
