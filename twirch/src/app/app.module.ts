@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 const config: SocketIoConfig = {
-  url: 'http://localhost:3080',
+  url: 'http://socket.io',
   options: {
     transports: ['websocket', 'polling']
   }
