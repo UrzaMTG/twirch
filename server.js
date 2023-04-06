@@ -8,7 +8,7 @@ const httpServer = http.createServer(app);
 
 app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
 
-app.get('/*', (req, res) => {
+app.get(/^(?!socket\.io$).*/, (req, res) => {
   res.sendFile(process.cwd()+'/twirch/dist/twirch/index.html');
 });
 
