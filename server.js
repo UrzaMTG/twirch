@@ -14,7 +14,7 @@ app.get('/*', (req, res) => {
 
 const { Server } = require('socket.io');
 const io = new Server(httpServer, {
-  transports: ['websocket'],
+  transports: ['websocket', 'polling'],
   cors: {
     origin: [
       'https://twirch-production.up.railway.app',
@@ -46,6 +46,11 @@ twitchClient.on('message', (channel, tags, message, self) => {
 
 twitchClient.connect().catch((error) => {
   console.error(error);
+});
+
+io.on('connect_error', () => {
+  // revert to classic upgrade
+  socket.io.opts.transports = ['polling', 'websocket'];
 });
 
 io.on('connection', (socket) => {
