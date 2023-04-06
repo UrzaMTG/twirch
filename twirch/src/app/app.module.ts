@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 const config: SocketIoConfig = {
-  url: 'https://socket.io',
+  url: 'https://twirch.io',
   options: {
     transports: ['polling', 'websocket']
   }
