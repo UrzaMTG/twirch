@@ -54,7 +54,7 @@ io.of('/').adapter.on('delete-room', (room) => {
 
 app.use((req, res, next) => {
   const corsWhitelist = [
-      'http://localhost',
+      'http://localhost:3080',
       'https://twirch-production.up.railway.app'
   ];
   if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
