@@ -55,6 +55,12 @@ io.of('/').adapter.on('delete-room', (room) => {
 
 app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+
+  next();
+});
+
 app.get('/*', (req, res) => {
   res.sendFile(process.cwd()+'/twirch/dist/twirch/index.html');
 });
