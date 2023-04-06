@@ -8,8 +8,10 @@ import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 const config: SocketIoConfig = {
-  url: 'https://twirch-production.up.railway.app',
-  options: {}
+  url: 'http://localhost:3080',
+  options: {
+    
+  }
 };
 
 @NgModule({
