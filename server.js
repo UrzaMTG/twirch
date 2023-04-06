@@ -52,6 +52,19 @@ io.of('/').adapter.on('delete-room', (room) => {
   twitchClient.part(room).catch((error) => { console.error(error); });
 });
 
+app.use((req, res, next) => {
+  const corsWhitelist = [
+      'http://localhost',
+      'https://twirch-production.up.railway.app'
+  ];
+  if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+      res.header('Access-Control-Allow-Origin', req.headers.origin);
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  }
+
+  next();
+});
+
 app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
 
 app.get('/*', (req, res) => {
