@@ -11,7 +11,7 @@ app.get('/*', (req, res) => {
 });
 
 const { Server } = require('socket.io');
-const io = new Server(httpServer, {
+const options = {
   transports: ["websocket"],
   cors: {
     origin: [
@@ -19,7 +19,8 @@ const io = new Server(httpServer, {
       'http://localhost:3080'
     ]
   }
-});
+};
+const io = new Server(httpServer, options);
 
 const tmi = require('tmi.js');
 
