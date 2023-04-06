@@ -17,35 +17,11 @@ const io = new Server(httpServer, {
   transports: ['websocket', 'polling'],
   cors: {
     origin: [
-      'https://twirch-production.up.railway.app',
+      'https://twirch.io',
       'http://localhost:3080'
     ],
     preflightContinue: true
   }
-});
-const tmi = require('tmi.js');
-
-const twitchClient = new tmi.Client({
-  options: {
-    skipMembership: true,
-    debug: false,
-  },
-  connection: {
-    reconnect: true,
-    secure: true,
-  },
-});
-
-twitchClient.on('message', (channel, tags, message, self) => {
-  // Ignore echoed messages.
-  if (self) return;
-
-  // Echo message to clients that care about this channel
-  io.to(channel).emit('chat message', {...tags, 'channel': channel, 'message': message})
-});
-
-twitchClient.connect().catch((error) => {
-  console.error(error);
 });
 
 io.on('connect_error', () => {
@@ -70,6 +46,31 @@ io.of('/').adapter.on('create-room', (room) => {
 io.of('/').adapter.on('delete-room', (room) => {
   console.debug(`Room ${room} was deleted`);
   twitchClient.part(room).catch((error) => { console.error(error); });
+});
+
+const tmi = require('tmi.js');
+
+const twitchClient = new tmi.Client({
+  options: {
+    skipMembership: true,
+    debug: false,
+  },
+  connection: {
+    reconnect: true,
+    secure: true,
+  },
+});
+
+twitchClient.connect().catch((error) => {
+  console.error(error);
+});
+
+twitchClient.on('message', (channel, tags, message, self) => {
+  // Ignore echoed messages.
+  if (self) return;
+
+  // Echo message to clients that care about this channel
+  io.to(channel).emit('chat message', {...tags, 'channel': channel, 'message': message})
 });
 
 httpServer.listen(port, () => {
