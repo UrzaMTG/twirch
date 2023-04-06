@@ -7,7 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:3080', options: {} };
+const config: SocketIoConfig = {
+  url: 'https://twirch-production.up.railway.app',
+  options: {}
+};
 
 @NgModule({
   declarations: [		

@@ -7,7 +7,6 @@ const { Server } = require('socket.io');
 const io = new Server(server, {
   cors: {
     origin: 'https://twirch-production.up.railway.app',
-    preflightContinue: true
   }
 });
 
