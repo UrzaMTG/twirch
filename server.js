@@ -11,17 +11,16 @@ app.get('/*', (req, res) => {
 });
 
 const { Server } = require('socket.io');
-const options = {
+const io = new Server(httpServer, {
   transports: ["websocket"],
   cors: {
     origin: [
       'https://twirch-production.up.railway.app',
       'http://localhost:3080'
-    ]
+    ],
+    preflightContinue: true
   }
-};
-const io = new Server(httpServer, options);
-
+});
 const tmi = require('tmi.js');
 
 const twitchClient = new tmi.Client({
