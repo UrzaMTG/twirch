@@ -7,8 +7,8 @@ const { Server } = require('socket.io');
 const io = new Server(server, {
   transports: ['websocket'],
   origin: [
-    'http://localhost:3080',
-    'https://twirch-production.up.railway.app'
+    'https://twirch-production.up.railway.app',
+    'http://localhost:3080'
   ]
 });
 
