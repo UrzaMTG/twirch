@@ -18,7 +18,8 @@ const io = new Server(httpServer, {
   cors: {
     origin: [
       'https://twirch.io',
-      'http://localhost:3080'
+      'http://localhost:3080',
+      'http://localhost:4200'
     ],
     preflightContinue: true
   }
