@@ -10,8 +10,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 const config: SocketIoConfig = {
   url: 'https://twirch.io',
   options: {
-    transports: ['polling', 'websocket']
-  }
+    transports: ['polling', 'websocket'],
+    closeOnBeforeunload: true
+  },
 };
 
 @NgModule({
