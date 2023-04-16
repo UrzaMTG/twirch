@@ -85,6 +85,10 @@
   padding-right: 4px;
 }
 
+.messageBadges {
+  padding-right: 2px;
+}
+
 .messageUsername {
   color: variables.$text-color;
   font-weight: 600;
@@ -101,3 +105,8 @@ img.twitch-emote {
   vertical-align: initial;
 }
 
+img.twitch-badge {
+  position: relative;
+  vertical-align: text-top;
+  padding-right: 2px;
+}
