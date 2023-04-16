@@ -46,16 +46,27 @@
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: auto;
+  overflow: overlay;
   overflow-y: scroll;
   margin: 32px 0 0 0;
   padding: 0;
 }
+
+#messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+#messages::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+#messages::-webkit-scrollbar-thumb {
+  background-color: variables.$timestamp-color;
+  border-radius: 10px;
+}
+
 #messages > li {
   padding: 0.5rem 0.5rem;
-}
-#messages > li:nth-child(odd) {
-  background: variables.$background-alt-row-color;
 }
 
 .messageContainer {
