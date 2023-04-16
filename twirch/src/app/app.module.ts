@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 const config: SocketIoConfig = {
   url: 'https://twirch.io',
@@ -25,7 +26,8 @@ const config: SocketIoConfig = {
     BrowserModule,
     AppRoutingModule,
     SocketIoModule.forRoot(config),
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
