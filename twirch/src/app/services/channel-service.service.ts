@@ -22,7 +22,7 @@ export class ChannelService {
   }
 
   keepAlive(): void {
-    this.socket.emit('keepAlive', '');
+    this.socket.emit('keepAlive', 'keepAlive');
   }
 
 }
