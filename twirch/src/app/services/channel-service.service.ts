@@ -14,7 +14,7 @@ export class ChannelService {
   chatMessage = this.socket.fromEvent<Message>(_chatMessage);
 
   constructor(private socket: Socket) {
-    this.keepAliveTimer = setInterval(this.keepAlive, 60000);
+    this.keepAliveTimer = setInterval(() => { this.keepAlive }, 60000);
   }
 
   selectChannels(channels: string[]): void {
