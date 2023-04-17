@@ -4,6 +4,7 @@ import { Message } from '../models/message';
 
 const _joinChannels: string = 'join channels';
 const _chatMessage: string = 'chat message';
+const _keepAlive: string = 'keepAlive';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class ChannelService {
   }
 
   keepAlive(): void {
-    this.socket.emit('keepAlive', 'keepAlive');
+    this.socket.emit(_keepAlive, '');
   }
 
 }
