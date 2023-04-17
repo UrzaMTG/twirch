@@ -5,26 +5,32 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 const config: SocketIoConfig = {
   url: 'https://twirch.io',
   options: {
-    transports: ['polling', 'websocket']
-  }
+    transports: ['polling', 'websocket'],
+    closeOnBeforeunload: true
+  },
 };
 
 @NgModule({
   declarations: [		
     AppComponent,
-    ToolbarComponent
+    AboutDialogComponent
    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    MatDialogModule,
+    HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AboutDialogComponent]
 })
 export class AppModule { }

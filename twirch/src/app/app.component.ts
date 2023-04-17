@@ -1,10 +1,13 @@
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { EmoteOptions, parse } from 'simple-tmi-emotes'
 
 import { Message } from './models/message';
 import { ChannelService } from './services/channel-service.service';
+import { BadgeService } from './services/Badges.service';
+import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
 
   private _msgSub?: Subscription;
   
-  constructor(private location: Location, private channelService: ChannelService) {
+  constructor(private location: Location, private channelService: ChannelService, private badgeService: BadgeService, private dialog: MatDialog) {
     channelService.selectChannels(location.path().split('/').splice(1));
   }
 
@@ -34,6 +37,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
   
   ngOnDestroy(): void {
     this._msgSub?.unsubscribe();
+  }
+
+  openAbout() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.panelClass = 'aboutPanel';
+    dialogConfig.maxHeight = '90%';
+    dialogConfig.maxWidth = '90%';
+    
+    this.dialog.open(AboutDialogComponent, dialogConfig);
   }
 
   private processMessage(msg: Message): void {
@@ -51,6 +64,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
       }
 
       msg.message = parse(msg.message, msg.emotes, options);
+    }
+
+    if (msg.badges) {
+      msg['badges-raw'] = this.badgeService.parseBadges(msg.badges);
     }
 
     // Push to bound array

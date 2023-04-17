@@ -18,7 +18,8 @@ const io = new Server(httpServer, {
   cors: {
     origin: [
       'https://twirch.io',
-      'http://localhost:3080'
+      'http://localhost:3080',
+      'http://localhost:4200'
     ],
     preflightContinue: true
   }
@@ -26,20 +27,24 @@ const io = new Server(httpServer, {
 
 io.on('connection', (socket) => {
   socket.on('join channels', (channels) => {
-    console.debug(`socket ${socket.id} joining channels: ` + channels.toString());
+    console.log(`socket ${socket.id} joining channels: ` + channels.toString());
     channels.toString().split(',').forEach(element => {
       socket.join(`#${element}`);
     });
   });
+  
+  socket.on('keepAlive', (keepAlive) => {
+    twitchClient.ping();
+  });
 });
 
 io.of('/').adapter.on('create-room', (room) => {
-  console.debug(`Room ${room} was created`);
+  console.log(`Room ${room} was created`);
   twitchClient.join(room).catch((error) => { console.error(error); });
 });
 
 io.of('/').adapter.on('delete-room', (room) => {
-  console.debug(`Room ${room} was deleted`);
+  console.log(`Room ${room} was deleted`);
   twitchClient.part(room).catch((error) => { console.error(error); });
 });
 

@@ -1,8 +1,43 @@
-$background-color: rgb(15, 15, 15);
-$background-alt-row-color: rgb(41, 41, 41);
-$text-color: rgb(224, 224, 224);
-$channel-color: rgb(150, 150, 150);
-$timestamp-color: rgb(105, 105, 105);
+@use '../variables';
+
+#navBar {
+  background:rgba(0, 0, 0, 0.75);
+  color: variables.$text-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  line-height: 32px;
+  padding: 0px 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 1;
+}
+
+#main {
+  z-index: 0;
+}
+
+.flexSpacer {
+  flex-grow: 99;
+  text-align: center;
+}
+
+.icon {
+  position: relative;
+  color: inherit;
+  top: 0px;
+  width: 24px;
+  height: 24px;
+}
+
+.icon:hover {
+  cursor: pointer;
+}
 
 #messages {
   list-style-type: none;
@@ -11,16 +46,27 @@ $timestamp-color: rgb(105, 105, 105);
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: auto;
+  overflow: overlay;
   overflow-y: scroll;
   margin: 32px 0 0 0;
   padding: 0;
 }
+
+#messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+#messages::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+#messages::-webkit-scrollbar-thumb {
+  background-color: variables.$timestamp-color;
+  border-radius: 10px;
+}
+
 #messages > li {
   padding: 0.5rem 0.5rem;
-}
-#messages > li:nth-child(odd) {
-  background: $background-alt-row-color;
 }
 
 .messageContainer {
@@ -30,27 +76,37 @@ $timestamp-color: rgb(105, 105, 105);
 }
 
 .messageChannel {
-  color: $channel-color;
+  color: variables.$channel-color;
   padding-right: 4px;
 }
 
 .messageTimestamp {
-  color: $timestamp-color;
+  color: variables.$timestamp-color;
   padding-right: 4px;
 }
 
+.messageBadges {
+  padding-right: 2px;
+}
+
 .messageUsername {
-  color: $text-color;
+  color: variables.$text-color;
   font-weight: 600;
   padding-right: 4px;
 }
 
 .messageText {
-  color: $text-color;
+  color: variables.$text-color;
 }
 
 img.twitch-emote {
   margin: -0.5rem 0;
   position: relative;
   vertical-align: initial;
+}
+
+img.twitch-badge {
+  position: relative;
+  vertical-align: text-top;
+  padding-right: 2px;
 }

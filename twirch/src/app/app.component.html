@@ -1,10 +1,13 @@
-<app-toolbar></app-toolbar>
-
+<div id="navBar">
+  <span class="flexSpacer">twirch</span>
+  <span><img class="icon" src="../../assets/images/gear.svg" role="img" alt><img class="icon" src="../../assets/images/question.svg" role="img" (click)="openAbout()" alt></span>
+</div>
 <div id="main">
   <ul id="messages" #scrollArea>
     <li *ngFor="let message of messages" class="messageContainer">
       <span class="messageChannel">({{message.channel}})</span>
       <span class="messageTimestamp" [hidden]="!message.timestamp">{{message.timestamp | date:'h:mm'}}</span>
+      <span class="messageBadges" [hidden]="!message['badges-raw']" [innerHTML]="message['badges-raw']"></span>
       <span class="messageUsername" [ngStyle]="{'color': message.color}">{{message['display-name']}}:</span>
       <span class="messageText" [innerHTML]="message.message"></span>
     </li>
