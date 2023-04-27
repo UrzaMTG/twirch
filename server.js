@@ -22,7 +22,8 @@ const io = new Server(httpServer, {
       'http://localhost:4200'
     ],
     preflightContinue: true
-  }
+  },
+  pingTimeout: 60000
 });
 
 io.on('connection', (socket) => {
