@@ -6,6 +6,10 @@ app.use(cors());
 const http = require('http');
 const httpServer = http.createServer(app);
 
+function LogMessage(message) {
+  console.log(`${new Date().toISOString()}: ${message}`);
+}
+
 app.use(express.static(process.cwd()+'/twirch/dist/twirch/'));
 
 app.get(/^(?!socket\.io$).*/, (req, res) => {
@@ -28,7 +32,7 @@ const io = new Server(httpServer, {
 
 io.on('connection', (socket) => {
   socket.on('join channels', (channels) => {
-    console.log(`socket ${socket.id} joining channels: ` + channels.toString());
+    LogMessage(`socket ${socket.id} joining channels: ` + channels.toString());
     channels.toString().split(',').forEach(element => {
       socket.join(`#${element}`);
     });
@@ -40,12 +44,12 @@ io.on('connection', (socket) => {
 });
 
 io.of('/').adapter.on('create-room', (room) => {
-  console.log(`Room ${room} was created`);
+  LogMessage(`Room ${room} was created`);
   twitchClient.join(room).catch((error) => { console.error(error); });
 });
 
 io.of('/').adapter.on('delete-room', (room) => {
-  console.log(`Room ${room} was deleted`);
+  LogMessage(`Room ${room} was deleted`);
   twitchClient.part(room).catch((error) => { console.error(error); });
 });
 
@@ -75,5 +79,5 @@ twitchClient.on('message', (channel, tags, message, self) => {
 });
 
 httpServer.listen(port, () => {
-  console.log('listening on *:3080');
+  LogMessage('listening on *:3080');
 });
