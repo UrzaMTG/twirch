@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
   socket.on('join channels', (channels) => {
     LogMessage(`socket ${socket.id} joining channels: ` + channels.toString());
     channels.toString().split(',').forEach(element => {
-      socket.join(`#${element}`);
+      if (element.length()) socket.join(`#${element}`);
     });
   });
   
