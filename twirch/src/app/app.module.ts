@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+import { environment } from 'src/environments/environment.development';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
@@ -10,7 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 
 const config: SocketIoConfig = {
-  url: 'https://twirch.io',
+  url: environment.serverUrl,
   options: {
     transports: ['polling', 'websocket'],
     closeOnBeforeunload: true
