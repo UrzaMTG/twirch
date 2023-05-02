@@ -1,3 +1,3 @@
 export const environment = {
-  serverUrl: 'https://angular.io'
+  serverUrl: 'https://twirch.io'
 };
