@@ -1,7 +1,7 @@
 @use '../variables';
 
 #navBar {
-  background:rgba(0, 0, 0, 0.75);
+  background: variables.$nav-background-color;
   color: variables.$text-color;
   position: fixed;
   top: 0;
@@ -16,10 +16,6 @@
   justify-content: space-between;
   gap: 16px;
   z-index: 1;
-}
-
-#main {
-  z-index: 0;
 }
 
 .flexSpacer {
@@ -37,6 +33,52 @@
 
 .icon:hover {
   cursor: pointer;
+}
+
+#settingsMenu {
+  position: fixed;
+  top: 32px;
+  right: 0px;
+  height: 32px;
+  width: 400px;
+  max-width: 60%;
+  line-height: 32px;
+  z-index: 100;
+}
+
+.settings-content-wrapper {
+  background: variables.$nav-background-color;
+  color: variables.$text-color;
+  width: 100%;
+  padding: 0 8px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.settingsRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.settingsLabel {
+  text-align: left;
+}
+
+.settingsInput {
+  max-width: 50%;
+  min-width: 35%;
+}
+
+select.settingsInput {
+  height: initial;
+  background: variables.$nav-background-color;
+  color: variables.$text-color;
+}
+
+#main {
+  z-index: 0;
 }
 
 #messages {
@@ -73,6 +115,10 @@
   word-wrap: break-word;
   line-height: 20px;
   vertical-align: middle;
+}
+
+.messageRowHighlight {
+  background: variables.$background-highlight-row-color;
 }
 
 .messageChannel {

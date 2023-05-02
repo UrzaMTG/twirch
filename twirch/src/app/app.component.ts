@@ -4,9 +4,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { EmoteOptions, parse } from 'simple-tmi-emotes'
 
-import { Message } from './models/message';
-import { ChannelService } from './services/channel-service.service';
-import { BadgeService } from './services/Badges.service';
+import { Message, Settings } from './models';
+import { ChannelService, BadgeService, SettingsService } from './services';
 import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
 
 @Component({
@@ -18,13 +17,17 @@ import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.compo
 export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
   @ViewChild('scrollArea') private scrollArea!: ElementRef;
 
+  public settings: Settings;
   messages: Message[] = [];
   title = 'twirch';
+  showSettings: boolean = false;
 
   private _msgSub?: Subscription;
   
-  constructor(private location: Location, private channelService: ChannelService, private badgeService: BadgeService, private dialog: MatDialog) {
-    channelService.selectChannels(location.path().split('/').splice(1));
+  constructor(private location: Location, private settingsService: SettingsService, private channelService: ChannelService, private badgeService: BadgeService, private dialog: MatDialog) {
+    this.settings = this.settingsService.settings;
+    this.settings.channels = location.path().split('/').splice(1);
+    channelService.selectChannels(this.settings.channels);
   }
 
   ngOnInit(): void {

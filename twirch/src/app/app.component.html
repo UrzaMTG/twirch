@@ -1,10 +1,24 @@
 <div id="navBar">
   <span class="flexSpacer">twirch</span>
-  <span><img class="icon" src="../../assets/images/gear.svg" role="img" alt><img class="icon" src="../../assets/images/question.svg" role="img" (click)="openAbout()" alt></span>
+  <span>
+    <img id="settingsIcon" class="icon" src="../../assets/images/gear.svg" role="img" alt="Settings menu" (click)="showSettings = !showSettings">
+    <img id="aboutIcon" class="icon" src="../../assets/images/question.svg" role="img" (click)="openAbout()" alt="About this page">
+  </span>
+</div>
+<div id="settingsMenu" [hidden]="!showSettings">
+  <div class="settings-content-wrapper">
+      <div class="settingsRow">
+        <label for="highlightChannel" class="settingsLabel">Highlight channel:</label>
+        <select name="highlightChannel" [(ngModel)]="settings.highlightChannel" class="settingsInput">
+          <option value="" selected></option>
+          <option *ngFor="let channel of settings.channels" [ngValue]="channel">{{channel}}</option>
+        </select>
+      </div>
+  </div>
 </div>
 <div id="main">
   <ul id="messages" #scrollArea>
-    <li *ngFor="let message of messages" class="messageContainer">
+    <li *ngFor="let message of messages" class="messageContainer" [class.messageRowHighlight]="message.channel === settings.highlightChannel">
       <span class="messageChannel">({{message.channel}})</span>
       <span class="messageTimestamp" [hidden]="!message.timestamp">{{message.timestamp | date:'h:mm'}}</span>
       <span class="messageBadges" [hidden]="!message['badges-raw']" [innerHTML]="message['badges-raw']"></span>
