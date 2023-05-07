@@ -1,6 +1,6 @@
 {
   "name": "twirch",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "App for viewing multiple Twitch chats in a single feed",
   "author": "Michael McBride",
   "license": "MIT",

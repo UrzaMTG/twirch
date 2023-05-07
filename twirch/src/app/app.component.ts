@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
   
   constructor(private location: Location, private settingsService: SettingsService, private channelService: ChannelService, private badgeService: BadgeService, private dialog: MatDialog) {
     this.settings = this.settingsService.settings;
-    this.settings.channels = location.path().split('/').splice(1);
+    this.settings.channels = location.path().toLowerCase().split('/').splice(1);
     channelService.selectChannels(this.settings.channels);
   }
 
