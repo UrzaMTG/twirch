@@ -69,12 +69,23 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
       msg.message = parse(msg.message, msg.emotes, options);
     }
 
+    // Insert links
+    msg.message = this.wrapMessageURLs(msg.message);
+
     if (msg.badges) {
       msg['badges-raw'] = this.badgeService.parseBadges(msg.badges);
     }
 
     // Push to bound array
     this.messages.push(msg);
+  }
+
+  private wrapMessageURLs(message: string): string {
+    const httpRegex: RegExp = /\b(https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)\b/g;
+    function replacer(match: string) {
+      return (match.toLowerCase().startsWith('http://') || match.toLowerCase().startsWith('https://')) ? `<a href="${match}" target="_blank">${match}</a>` : `<a href="http://${match}" target="_blank">${match}</a>`;
+    }
+    return message.replaceAll(httpRegex, replacer);
   }
 
   private scrollToBottom(): void {
