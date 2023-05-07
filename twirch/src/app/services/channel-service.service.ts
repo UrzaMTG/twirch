@@ -2,13 +2,10 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Message } from '../models/message';
 
-enum SocketIoManagerEvents {
-  Error = 'error',
-  Ping = 'ping',
-  Reconnect = 'reconnect',
-  ReconnectAttempt = 'reconnect_attempt',
-  ReconnectError = 'reconnect_error',
-  ReconnectFailed = 'reconnect_failed'
+enum SocketIoEvents {
+  ConnectError = 'connect_error',
+  Connect = 'connect',
+  Disconnect = 'disconnect'
 }
 
 const _joinChannels: string = 'join channels';
@@ -25,12 +22,9 @@ export class ChannelService {
 
   constructor(private socket: Socket) {
     this.keepAliveTimer = setInterval(() => { this.keepAlive }, 60000);
-    this.socket.on(SocketIoManagerEvents.Error, () => {console.log("Socket error")});
-    this.socket.on(SocketIoManagerEvents.Ping, () => {console.log("Ping received")});
-    this.socket.on(SocketIoManagerEvents.Reconnect, () => {console.log("Socket reconnecting")});
-    this.socket.on(SocketIoManagerEvents.ReconnectAttempt, () => {console.log("Socket reconnect attempt")});
-    this.socket.on(SocketIoManagerEvents.ReconnectError, () => {console.log("Socket reconnect error")});
-    this.socket.on(SocketIoManagerEvents.ReconnectFailed, () => {console.log("Socket reconnect failure")});
+    this.socket.on(SocketIoEvents.Connect, () => {console.log("Socket connected")});
+    this.socket.on(SocketIoEvents.ConnectError, (error: Error) => {console.log(`Socket connection error: ${error.message}`)});
+    this.socket.on(SocketIoEvents.Disconnect, (reason: string) => {console.log(`Socket disconnected: ${reason}`)});
   }
 
   selectChannels(channels: string[]): void {
