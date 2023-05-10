@@ -81,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
   }
 
   private wrapMessageURLs(message: string): string {
-    const httpRegex: RegExp = /\b(https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)\b/g;
+    const httpRegex: RegExp = /(?<!\S)(https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)\b/g;
     function replacer(match: string) {
       return (match.toLowerCase().startsWith('http://') || match.toLowerCase().startsWith('https://')) ? `<a href="${match}" target="_blank">${match}</a>` : `<a href="http://${match}" target="_blank">${match}</a>`;
     }
