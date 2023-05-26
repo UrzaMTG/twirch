@@ -32,7 +32,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
 
   ngOnInit(): void {
     this._connSub = this.channelService.connectionFinished.subscribe( (complete) => {
-      console.log("Subscribing to channels");
       this.channelService.selectChannels(this.settings.channels);
     });
     this._msgSub = this.channelService.chatMessage.subscribe( (msg) => this.processMessage(msg));
