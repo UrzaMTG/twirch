@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client, Options } from 'tmi.js';
+import { Subject } from 'rxjs';
 import { Message } from '../models/message';
-import { Observable, Subject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
