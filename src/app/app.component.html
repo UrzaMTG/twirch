@@ -22,7 +22,7 @@
       <span class="messageChannel">({{message.channel}})</span>
       <span class="messageTimestamp" [hidden]="!message.timestamp">{{message.timestamp | date:'h:mm'}}</span>
       <span class="messageBadges" [hidden]="!message['badges-raw']" [innerHTML]="message['badges-raw']"></span>
-      <span class="messageUsername" [ngStyle]="{'color': message.color}">{{message['display-name']}}:</span>
+      <span class="messageUsername" [hidden]="!message['display-name']" [ngStyle]="{'color': message.color}">{{message['display-name']}}:</span>
       <span class="messageText" [innerHTML]="message.message"></span>
     </li>
   </ul>
