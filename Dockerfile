@@ -1,4 +1,4 @@
-FROM node:18 AS ui-build
+FROM node:latest AS ui-build
 WORKDIR /app
 COPY . .
 RUN npm install @angular/cli && npm install && npm run build
