@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Client, Options } from 'tmi.js';
 import { Message } from '../models/message';
-import { Observable, of } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChannelService {
-  chatMessage!: Observable<Message>;
-
-  twitchClient: Client;
+  private twitchClient?: Client;
+  chatMessage: Subject<Message> = new Subject<Message>();
+  connectionFinished: Subject<boolean> = new Subject<boolean>();
 
   constructor() {
     const opts: Options = {
@@ -24,18 +24,26 @@ export class ChannelService {
     }
     this.twitchClient = new Client(opts);
 
+    this.twitchClient.on('connected', (address, port) => {
+      this.connectionFinished.next(true);
+    });
+
     this.twitchClient.on('message', (channel, tags, message, self) => {
       // Ignore echoed messages.
       if (self) return;
     
       // Echo message
-      this.chatMessage = of( {...tags, 'channel': channel, 'message': message} );
+      this.chatMessage.next( {...tags, 'channel': channel, 'message': message} );
     });
+
+    this.twitchClient.connect().catch( (error) => console.log(error) );
   }
 
   selectChannels(channels: string[]): void {
-    for(const channel of channels) {
-      this.twitchClient.join(channel);
+    if (this.twitchClient) {
+      for(const channel of channels) {
+        this.twitchClient.join(channel);
+      }
     }
   }
 
