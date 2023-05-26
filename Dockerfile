@@ -7,5 +7,3 @@ RUN npm run build --prod
 # Stage 2
 FROM nginx:alpine
 COPY --from=node /app/dist/twirch /usr/share/nginx/html
-
-EXPOSE 4200
