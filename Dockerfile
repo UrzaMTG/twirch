@@ -1,15 +1,12 @@
-FROM node:18 AS ui-build
-WORKDIR /usr/src/app
-COPY twirch/ ./twirch/
-RUN cd twirch && npm install @angular/cli && npm install && npm run build
+# Stage 1
+FROM node:16-alpine as node
+WORKDIR /app
 
-FROM node:18 AS server-build
-WORKDIR /root/
-COPY --from=ui-build /usr/src/app/twirch/dist ./twirch/dist
-COPY package*.json ./
+COPY . .
 RUN npm install
-COPY server.js .
+RUN npm run build
 
-EXPOSE 3080
+FROM nginx:alpine
+COPY --from=node /app/dist/twirch/ /usr/share/nginx/html
 
-CMD ["node", "server.js"]
+EXPOSE 80

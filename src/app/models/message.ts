@@ -1,7 +1,7 @@
 import { Badges } from "tmi.js";
 
 export class Message {
-  username!: string;
+  username?: string;
   message!: string;
   
   channel?: string;

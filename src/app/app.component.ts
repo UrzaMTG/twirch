@@ -22,16 +22,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
   title = 'twirch';
   showSettings: boolean = false;
 
+  private _connSub?: Subscription;
   private _msgSub?: Subscription;
   
   constructor(private location: Location, private settingsService: SettingsService, private channelService: ChannelService, private badgeService: BadgeService, private dialog: MatDialog) {
     this.settings = this.settingsService.settings;
     this.settings.channels = location.path().toLowerCase().split('/').splice(1);
-    channelService.selectChannels(this.settings.channels);
   }
 
   ngOnInit(): void {
-    this._msgSub = this.channelService.chatMessage.subscribe((msg) => this.processMessage(msg));
+    this._connSub = this.channelService.connectionFinished.subscribe( (complete) => {
+      this.channelService.selectChannels(this.settings.channels);
+    });
+    this._msgSub = this.channelService.chatMessage.subscribe( (msg) => this.processMessage(msg));
   }
 
   ngAfterViewChecked(): void {
@@ -39,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
   }
   
   ngOnDestroy(): void {
+    this._connSub?.unsubscribe();
     this._msgSub?.unsubscribe();
   }
 
