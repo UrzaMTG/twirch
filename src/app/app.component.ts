@@ -7,6 +7,7 @@ import { EmoteOptions, parse } from 'simple-tmi-emotes'
 import { Message, Settings } from './models';
 import { ChannelService, BadgeService, SettingsService } from './services';
 import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked  {
 
   public settings: Settings;
   messages: Message[] = [];
-  title = 'twirch';
+  title = environment.title;
   showSettings: boolean = false;
 
   private _connSub?: Subscription;
