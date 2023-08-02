@@ -1,3 +1,4 @@
 export const environment = {
-  title: "twirch"
+  title: 'twirch',
+  twitchAccessToken: ''
 };
