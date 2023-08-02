@@ -13,7 +13,7 @@ export class BadgeService {
   constructor(private http: HttpClient) {
     const url = 'https://api.twitch.tv/helix/chat/badges/global';
     const headers = new HttpHeaders()
-      .set('Authorization', 'Bearer cr2x9xzuef13wlwrs29tm2wq71lsuj')
+      .set('Authorization', `Bearer ${process.env['TWITCHACCESSTOKEN']}`)
       .set('Client-Id', '7p63vvqitomsz4k6pig8gi1ym2wv6s');
     this.http.get<BadgeData>(url, {headers: headers}).subscribe( (res) => {
       res.data.map(badge => {
