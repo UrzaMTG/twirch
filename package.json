@@ -9,7 +9,7 @@
     "dev": "ng serve --configuration development",
     "start": "ng serve --port 4200",
     "build": "npm run config && ng build",
-    "config": "ts-node /src/environments/set-env.ts",
+    "config": "ts-node src/environments/set-env.ts",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
