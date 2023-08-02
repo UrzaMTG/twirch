@@ -8,11 +8,8 @@ const setEnv = () => {
     path: 'src/environments/.env'
   });
 // `environment.ts` file structure
-  const envConfigFile = `export const environment = {
-  title: 'twirch',
-  twitchAccessToken: '${process.env["TWITCHACCESSTOKEN"]}'
-};
-`;
+  const envConfigFile = process.env["environment"];
+
   console.log('The file `environment.ts` will be written with the following content: \n');
   writeFile(targetPath, envConfigFile, (err: any) => {
     if (err) {
