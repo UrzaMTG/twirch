@@ -18,12 +18,25 @@
 </div>
 <div id="main">
   <ul id="messages" #scrollArea>
-    <li *ngFor="let message of messages" class="messageContainer" [class.messageRowHighlight]="message.channel === settings.highlightChannel">
-      <span class="messageChannel">({{message.channel}})</span>
-      <span class="messageTimestamp" [hidden]="!message.timestamp">{{message.timestamp | date:'h:mm'}}</span>
-      <span class="messageBadges" [hidden]="!message['badges-raw']" [innerHTML]="message['badges-raw']"></span>
-      <span class="messageUsername" [hidden]="!message['display-name']" [ngStyle]="{'color': message.color}">{{message['display-name']}}:</span>
-      <span class="messageText" [innerHTML]="message.message"></span>
+    <li class="messageContainer"
+        *ngFor="let message of messages"
+        [class.eventMessage]="message['message-type'] != 'chat'"
+        [class.messageRowHighlight]="message.channel === settings.highlightChannel">
+      <ng-container *ngTemplateOutlet="message['message-type'] === 'chat' ? chatMessage : chatEvent; context: {$implicit: message}">
+      </ng-container>
     </li>
   </ul>
 </div>
+
+<ng-template #chatMessage let-message>
+  <span class="messageChannel">({{message.channel}})</span>
+  <span class="messageTimestamp" [hidden]="!message.timestamp">{{message.timestamp | date:'h:mm'}}</span>
+  <span class="messageBadges" [hidden]="!message['badges-raw']" [innerHTML]="message['badges-raw']"></span>
+  <span class="messageUsername" [hidden]="!message['display-name']" [ngStyle]="{'color': message.color}">{{message['display-name']}}:</span>
+  <span class="messageText" [innerHTML]="message.message"></span>
+</ng-template>
+
+<ng-template #chatEvent let-message>
+  <span class="messageChannel">({{message.channel}})</span>
+  <span class="messageText" [innerHTML]="message.message"></span>
+</ng-template>

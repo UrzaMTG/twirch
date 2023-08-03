@@ -117,6 +117,10 @@ select.settingsInput {
   vertical-align: middle;
 }
 
+.eventMessage {
+  border-left: 4px solid variables.$text-color;
+}
+
 .messageRowHighlight {
   background: variables.$background-highlight-row-color;
 }
